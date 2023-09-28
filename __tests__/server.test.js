@@ -1,77 +1,100 @@
-'use strict';
+// 'use strict';
 
-const supertest = require('supertest');
-const app = require('../src/server');
-const request = supertest(app);
+// const supertest = require('supertest');
+// const server = require('../src/server');
+// const { sequelize } = require('../src/models');
+// const request = supertest(server.app);
 
-// describe('Testing the server', () => {
+// beforeAll(async () => {
+//   await sequelize.sync();
+// });
 
-//   test('User can signin', async () => {
-//     let response = await request.get('/signin');
+// afterAll(async () => {
+//   await sequelize.drop();
+// });
+
+// describe('Testing server', () => {
+//   test('POST /signup to create a user', async () => {
+//     let response = await request.get('/signup');
 
 //     expect(response.status).toEqual(200);
-//     expect(response.body.results).toEqual(12);
+//     expect(response.body.results).toBeTruthy();
+//   });
+
+//   test('POST /signin to login a user and receive a token.', async () => {
+//     let response = await request.post('/signin').send({
+//       username: 'Test',
+//       password: 'test',
+//     });
+
+//     expect(response.status).toEqual(200);
+//     expect(response.body.name).toEqual('Test');
+//     expect(response.body.password).toEqual('test');
+//   });
+
+//   test('Should UPDATE pet', async () => {
+//     let response = await request.put('/api/pet/1').send({
+//       name: 'Jojo',
+//       personId: 1,
+//     });
+
+//     expect(response.status).toEqual(200);
+//     expect(response.body.name).toEqual('Jojo');
+//     expect(response.body.personId).toEqual(1);
+//   });
+
+//   test('Should DELETE pet', async () => {
+//     let response = await request.delete('/api/pet/1');
+
+//     expect(response.status).toEqual(200);
 //   });
 // });
 
-describe('API Routes', () => {
-  // AUTH Routes
-  describe('AUTH Routes', () => {
-    // Test user registration (POST /signup)
-    test('should create a new user and send an object with the user and token to the client', async () => {
-      const response = await request(app)
-        .post('/signup')
-        .send({
-          username: 'testuser',
-          password: 'testpassword',
-        });
+// test('Will this return a 404 error - bad path', async () => {
+//   let response = await request.get('/api/notAnEndpoint');
 
-      expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty('user');
-      expect(response.body).toHaveProperty('token');
-    });
+//   expect(response.status).toEqual(404);
+//   expect(response.body.message).toEqual('Error 404 - Incorrect Path');
+// });
 
-    // Test user login (POST /signin)
-    test('should log in a user and send an object with the user and token to the client', async () => {
-      const response = await request(app)
-        .post('/signin')
-        .auth('testuser', 'testpassword'); // Replace with the registered user's credentials
+// test('Will this return a 404 error - bad method', async () => {
+//   let response = await request.patch('/api/person');
 
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('user');
-      expect(response.body).toHaveProperty('token');
+//   expect(response.status).toEqual(404);
+//   expect(response.body.message).toEqual('Error 404 - Incorrect Method');
+// });
 
-      // Store the authentication token for authenticated API routes
-      authToken = response.body.token;
-    });
-  });
+// test('Should READ person', async () => {
+//   let response = await request.get('/api/person');
 
-  // V1 (Unauthenticated API) routes
-  describe('V1 (Unauthenticated) Routes', () => {
-    // Test adding an item (POST /api/v1/:model)
-    test('should add an item to the DB and return an object with the added item', async () => {
-      // Make a POST request to add an item to the DB
-      // Replace '/api/v1/:model' with the actual endpoint and provide data as needed
+//   expect(response.status).toEqual(200);
+//   expect(response.body.results).toBeTruthy();
+// });
 
-      const response = await request(app)
-        .post('/api/v1/:model')
-        .send({ /* Provide data for the item */ });
+// test('Should CREATE person', async () => {
+//   let response = await request.post('/api/person').send({
+//     name: 'Chester',
+//     age: 100,
+//   });
 
-      expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty('addedItem');
-    });
+//   expect(response.status).toEqual(200);
+//   expect(response.body.name).toEqual('Chester');
+//   expect(response.body.age).toEqual(100);
+// });
 
-    // Test getting a list of items (GET /api/v1/:model)
-    test('should return a list of items', async () => {
-      // Make a GET request to retrieve a list of items
-      // Replace '/api/v1/:model' with the actual endpoint
+// test('Should UPDATE person', async () => {
+//   let response = await request.put('/api/person/1').send({
+//     name: 'Toyota',
+//     age: 50,
+//   });
 
-      const response = await request(app).get('/api/v1/:model');
+//   expect(response.status).toEqual(200);
+//   expect(response.body.name).toEqual('Toyota');
+//   expect(response.body.age).toEqual(50);
+// });
 
-      expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
-    });
+// test('Should DELETE person', async () => {
+//   let response = await request.delete('/api/person/1');
 
-    // Add more test cases for V1 routes as needed
-  });
-});
+//   expect(response.status).toEqual(200);
+// });

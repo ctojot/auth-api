@@ -25,7 +25,7 @@ afterEach(async () => {
 describe('Testing the auth workflow', () => {
   test('Should be able to register a user on POST /signup', async () => {
     let response = await request.post('/signup').send({
-      username: 'Jacob',
+      username: 'Test',
       password: 'test',
     });
 
@@ -35,7 +35,7 @@ describe('Testing the auth workflow', () => {
     expect(response.body.token).toBeTruthy();
   });
   test('Should be able to login in an existing user', async () => {
-    let encodedCredentials = base64.encode('Jacob:test');
+    let encodedCredentials = base64.encode('Test:test');
 
     let response = await request.post('/signin').set({
       Authorization: `Basic ${encodedCredentials}`,
@@ -43,7 +43,7 @@ describe('Testing the auth workflow', () => {
 
     console.log('USER FROM RESPONSE BODY', response.body);
     expect(response.status).toBe(200);
-    expect(response.body.username).toBe('Jacob');
+    expect(response.body.username).toBe('Test');
   });
 
   test('Token can be exchanged for secure data', async () => {
